@@ -5,7 +5,7 @@ const readline = require('readline').createInterface({
 });
 
 const karakter = ["Mahiru", "Rem", "Seika", "Nijika", "Shizuka", "Hitori Gotoh", "Kurumi", "Chitanda", "Mitsuha", "Utahime", "Hinata", "Mitsuri", "Horikita", "Takagi", "Kubo", "Tsukasa", "Kanade", "Turnip", "Liyan", "MumtazG", "Umar", "Umaru", "Fathin"];
-function gacha(pengen) {
+function gacha(pengen, pity) {
     let ampas = Math.floor(Math.random()*karakter.length)
     let gacor = []
     const presentaseGacor = 7 / 100;
@@ -16,7 +16,7 @@ function gacha(pengen) {
         gacor.push(Math.floor(Math.random() * 7));
         console.log('['+ chalk.cyan(gacor.toString()) + ']');
     }
-    if (gacor.every(elem => elem === gacor[0])) {
+    if (gacor.every(elem => elem === gacor[0]) || pity > Math.floor(Math.random() * (90-70) + 70) {
         const randomValue = Math.random();
         const isMenang = randomValue >= presentaseGacor;
 
@@ -28,7 +28,8 @@ function gacha(pengen) {
     }
     return chalk.redBright(`[${gacor.toString()}] \n Waah Maaf Ya, Anda Tidak Beruntung`)
 }
-function main() {
+function main(pity) {
+    console.log("Udah main sebanyak: "+pity);
     readline.question(`${chalk.yellow('>==============================================<')}\nKamu Mau Siapa?\n${chalk.yellow('>==============================================<')}\nList Char: \n ${karakter} \n > `, pengen => {
         if(!karakter.includes(pengen.replace(" (FATHIN222GACOR)", ""))){
             console.log(chalk.redBright("MOHON GUNAKAN KARAKTER YANG ADA DIDALAM CONTOH TERMASUK PENGGUNAAN HURUF KAPITAL!!!"));
@@ -36,7 +37,8 @@ function main() {
         console.log(gacha(pengen));
         readline.question(chalk.cyan(`Pengen Main Lagi? (iya, tidak) > `), lagi => {
             if(lagi.toLowerCase() === "iya"){
-                main();
+                main(pity+1);
+                
             }else{
                 readline.close();
             }
@@ -44,4 +46,4 @@ function main() {
     });
 }
 console.log(chalk.yellow("WELCOME TO FTHGACOR222!!"));
-main();
+main(0);
