@@ -16,7 +16,7 @@ function gacha(pengen, pity) {
         gacor.push(Math.floor(Math.random() * 7));
         console.log('['+ chalk.cyan(gacor.toString()) + ']');
     }
-    if (gacor.every(elem => elem === gacor[0]) || pity > Math.floor(Math.random() * (90-70) + 70) {
+    if (gacor.every(elem => elem === gacor[0]) || pity > Math.floor(Math.random() * (90-70) + 70)) {
         const randomValue = Math.random();
         const isMenang = randomValue >= presentaseGacor;
 
@@ -28,22 +28,37 @@ function gacha(pengen, pity) {
     }
     return chalk.redBright(`[${gacor.toString()}] \n Waah Maaf Ya, Anda Tidak Beruntung`)
 }
-function main(pity) {
+function main(pity, kode) {
     console.log("Udah main sebanyak: "+pity);
     readline.question(`${chalk.yellow('>==============================================<')}\nKamu Mau Siapa?\n${chalk.yellow('>==============================================<')}\nList Char: \n ${karakter} \n > `, pengen => {
         if(!karakter.includes(pengen.replace(" (FATHIN222GACOR)", ""))){
             console.log(chalk.redBright("MOHON GUNAKAN KARAKTER YANG ADA DIDALAM CONTOH TERMASUK PENGGUNAAN HURUF KAPITAL!!!"));
         }
+        if(kode && pengen.includes(" (FATHIN222GACOR)")){
+            console.log(chalk.redBright("ANDA SUDAH MENGGUNAKAN KODE"));
+            main(pity)
+        }
         console.log(gacha(pengen));
-        readline.question(chalk.cyan(`Pengen Main Lagi? (iya, tidak) > `), lagi => {
-            if(lagi.toLowerCase() === "iya"){
-                main(pity+1);
-                
-            }else{
-                readline.close();
-            }
-        });
+        if(pengen.includes(" (FATHIN222GACOR)") || kode){
+            readline.question(chalk.cyan(`Pengen Main Lagi? (iya, tidak) > `), lagi => {
+                if(lagi.toLowerCase() === "iya"){
+                        main(pity+1, true);                    
+                }else{
+                    readline.close();
+                }
+            });
+        }else{
+            readline.question(chalk.cyan(`Pengen Main Lagi? (iya, tidak) > `), lagi => {
+                if(lagi.toLowerCase() === "iya"){                    
+                        main(pity+1, false);
+                    
+                }else{
+                    readline.close();
+                }
+            });
+        }
+
     });
 }
 console.log(chalk.yellow("WELCOME TO FTHGACOR222!!"));
-main(0);
+main(0, false);
